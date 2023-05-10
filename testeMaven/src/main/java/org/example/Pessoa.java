@@ -2,10 +2,12 @@ package org.example;
 
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
+import java.util.Objects;
 
 public class Pessoa {
 
-    private  String nome;
+    private String nome;
+
     private LocalDateTime nascimento;
 
     public Pessoa(String nome, LocalDateTime nascimento) {
@@ -13,11 +15,26 @@ public class Pessoa {
         this.nascimento = nascimento;
     }
 
-    public int getIdade(){
+    public int getIdade() {
         return (int) ChronoUnit.YEARS.between(nascimento, LocalDateTime.now());
     }
 
-    public boolean ehMaiorDeIdade(){
+    public boolean ehMaiorDeIdade() {
         return getIdade() >= 18;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        Pessoa pessoa = (Pessoa) o;
+        return nome.equals(pessoa.nome) && Objects.equals(nascimento, pessoa.nascimento);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(nome, nascimento);
+    }
+
+
 }
